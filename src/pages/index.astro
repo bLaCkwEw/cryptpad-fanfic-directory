@@ -1,7 +1,30 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getSession } from "auth-astro/server";
+import { SignIn, SignOut } from "auth-astro/components"
+import { db, Users, Fanfics } from "astro:db";
+
+const session = await getSession(Astro.request);
 ---
 
 <Layout>
-	Work In Progress
+	{
+		session ? (
+			<SignOut>Logout</SignOut>
+		) : (
+			<SignIn provider="github">Login</SignIn>
+		)
+	}
+
+
+  {
+    session ? (
+      <p>Welcome {session.user?.name}</p>
+    ) : (
+      <p>Not logged in</p>
+    )
+	}
+
+
+
 </Layout>
